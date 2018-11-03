@@ -17,30 +17,20 @@ namespace VRStandardAssets.Menu
         [SerializeField] private SelectionRadial m_SelectionRadial;         // This controls when the selection is complete.
         [SerializeField] private VRInteractiveItem m_InteractiveItem;       // The interactive item for where the user should click to load the level.
 
+        public bool Normal;
         public AudioClip[] _AudioDoor;
         public AudioSource Src;
-
-        public GameObject Door;
+        
+        private Vector3 new_axis = new Vector3(0, 0, -1);
+        private Vector3 new_axis1 = new Vector3(0, 0, 1);
+        private int _Time = 0;
+        public HingeJoint _openDoor;
         public bool DoorOpened;
 
 
         private bool m_GazeOver;                                            // Whether the user is looking at the VRInteractiveItem currently.
 
-        private void Update()
-        {
-            
-            if (DoorOpened)
-            {
-                if (Door.transform.eulerAngles.y >= 180 && Door.transform.eulerAngles.y <= 271 )
-                {
-                    Door.transform.Rotate(0,0,Time.deltaTime * 50);
-                }
-                if (Door.transform.eulerAngles.y <= 180) {
-                    DoorOpened = false;
-                    Door.GetComponent<Collider>().enabled = false;
-                }
-            }
-        }
+       
 
         private void OnEnable()
         {
@@ -80,11 +70,83 @@ namespace VRStandardAssets.Menu
 
         public void HandleSelectionComplete()
         {
-            DoorOpened = true;
-            Src.clip = _AudioDoor[0];
-            Src.Play();
+            if (Normal)
+            {
+                if (_Time % 2 == 0)
+                {
 
-             m_GazeOver = false;
+
+                    _openDoor.axis = new_axis1;
+
+                    JointSpring hingeSpring = _openDoor.spring;
+                    hingeSpring.spring = 600;
+                    hingeSpring.damper = 600;
+                    hingeSpring.targetPosition = 90;
+                    _openDoor.spring = hingeSpring;
+
+                    _openDoor.useSpring = true;
+
+                    Src.clip = _AudioDoor[0];
+                    Src.Play();
+                   
+                }
+                else
+                {
+
+
+                    _openDoor.axis = new_axis;
+
+                    JointSpring hingeSpring = _openDoor.spring;
+                    hingeSpring.spring = 600;
+                    hingeSpring.damper = 600;
+                    hingeSpring.targetPosition = 90;
+                    _openDoor.spring = hingeSpring;
+
+                    _openDoor.useSpring = true;
+                  
+                    Src.clip = _AudioDoor[1];
+                    Src.Play();
+                }
+
+                _Time++;
+            }
+            else
+            {
+                if (_Time % 2 == 0)
+                {
+                    _openDoor.axis = new_axis;
+
+                    JointSpring hingeSpring = _openDoor.spring;
+                    hingeSpring.spring = 600;
+                    hingeSpring.damper = 600;
+                    hingeSpring.targetPosition = 180;
+                    _openDoor.spring = hingeSpring;
+
+                    _openDoor.useSpring = true;
+
+                    Src.clip = _AudioDoor[0];
+                    Src.Play();
+                   
+                }
+                else
+                {
+                    _openDoor.axis = new_axis1;
+
+                    JointSpring hingeSpring = _openDoor.spring;
+                    hingeSpring.spring = 600;
+                    hingeSpring.damper = 600;
+                    hingeSpring.targetPosition = 180;
+                    _openDoor.spring = hingeSpring;
+
+                    _openDoor.useSpring = true;
+
+                    Src.clip = _AudioDoor[1];
+                    Src.Play();
+                    
+                }
+                _Time++;
+            }
+            m_GazeOver = false;
         }
 
     }

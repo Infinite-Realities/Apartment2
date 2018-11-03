@@ -82,6 +82,11 @@ public class ObjectControl : MonoBehaviour {
                 _Teleport.SetActive(false);
                 Mover.SetActive(false);
 
+                for(int i = 0; i < _SelectedObject.Length; i++)
+                {
+                    _SelectedObject[i].GetComponent<Collider>().enabled = true;
+                }
+                _canv.SetActive(false);
                 MovingWork = false;
             }
             else
@@ -91,22 +96,29 @@ public class ObjectControl : MonoBehaviour {
                     _Teleport.SetActive(false);
                     _Retricle.SetActive(true);
                     _Laser.SetActive(true);
+                    for (int i = 0; i < _SelectedObject.Length; i++)
+                    {
+                        _SelectedObject[i].GetComponent<Collider>().enabled = true;
+                    }
                 }
                 else
                 {
                     _Teleport.SetActive(true);
                     _Retricle.SetActive(false);
                     _Laser.SetActive(false);
+
+                    for (int i = 0; i < _SelectedObject.Length; i++)
+                    {
+                        _SelectedObject[i].GetComponent<Collider>().enabled = false;
+                    }
+                    _canv.SetActive(false);
                 }
 
                 c++;
             }
         }
 
-        if (Mover.active == true)
-        {
-            _canv.SetActive(false);
-        }
+        
 
         if (DoneChose)
         {
@@ -147,6 +159,11 @@ public class ObjectControl : MonoBehaviour {
             _MoveMent = true;
             MovingWork = true;
             MenInx = -1;
+            for (int i = 0; i < _SelectedObject.Length; i++)
+            {
+                if(i!=ObjInx)
+                _SelectedObject[i].GetComponent<Collider>().enabled = false;
+            }
 
         }
 

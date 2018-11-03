@@ -32,9 +32,8 @@ public class BezierRaycaster : ArcRaycaster {
 			Debug.LogError ("Tracking MUST BE set for BezierRaycaster");
 		}
 	}
-   
 
-    void Update () {
+	void Update () {
 		MakingContact = false;
 		End = HitPoint = ControllerPosition + ControllerForward * distance + (ControllerUp * -1.0f) * dropHeight;
 
@@ -47,15 +46,11 @@ public class BezierRaycaster : ArcRaycaster {
 			Vector3 sample = SampleCurve(Start, End, Control, Mathf.Clamp01(t));
 
 			if (Physics.Linecast(last, sample, out hit, ~excludeLayers)) {
-
-                if (!excludeLayers.Equals("Avoiding")) { 
 				float angle = Vector3.Angle(Vector3.up, hit.normal);
-                    if (angle < surfaceAngle)
-                    {
-                        HitPoint = hit.point;
-                        Normal = hit.normal;
-                        MakingContact = true;
-                    }
+				if (angle < surfaceAngle) {
+					HitPoint = hit.point;
+					Normal = hit.normal;
+					MakingContact = true;
 				}
 			}
 

@@ -26,7 +26,6 @@ public class ArcRaycaster : MonoBehaviour {
 
 	public OVRInput.Controller Controller {
 		get {
-           
 			OVRInput.Controller controller = OVRInput.GetConnectedControllers ();
 			if ((controller & OVRInput.Controller.LTrackedRemote) == OVRInput.Controller.LTrackedRemote) {
 				return OVRInput.Controller.LTrackedRemote;
