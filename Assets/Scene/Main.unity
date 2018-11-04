@@ -19417,7 +19417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SelectionRadial: {fileID: 1735786428}
   m_InteractiveItem: {fileID: 1735786429}
-  height: 0.5
+  height: 0.1
   ObjectIndex: 4
 --- !u!114 &1735786428
 MonoBehaviour:
